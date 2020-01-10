@@ -62,8 +62,9 @@ public class BlockMovement : MonoBehaviour
         {
             Vector2 block1Pos = child.position;
 
-            if (map.Exists((int)block1Pos.x, (int)block1Pos.y))
+            if (map.Exists((int)Math.Round(block1Pos.x), (int)Math.Round(block1Pos.y)))
             {
+                Debug.Log($"Exists:{(int)Math.Round(block1Pos.x)}, {(int)Math.Round(block1Pos.y)})");
                 return true;
             }
         }
@@ -94,7 +95,7 @@ public class BlockMovement : MonoBehaviour
 
     private bool IsHitBorder(Vector2 pos)
     {
-        return ((int)pos.x < 0 || (int)pos.x > 11 || (int)pos.y <= 0);
+        return ((int)Math.Round(pos.x) < 0 || (int)Math.Round(pos.x) > 11 || (int)Math.Round(pos.y) < 0);
     }
 
     private void MoveLeft()

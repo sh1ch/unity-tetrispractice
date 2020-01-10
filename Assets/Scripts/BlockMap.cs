@@ -17,8 +17,9 @@ public class BlockMap : MonoBehaviour
             Vector2 pos = block.position;
 
             // 配列は 0, 0 を始点とする
-            Set((int)pos.x, (int)pos.y);
-            Debug.Log($"x:({pos.x}), y:({pos.y}) D:{DateTime.Now}");
+            Set((int)Math.Round(pos.x), (int)Math.Round(pos.y));
+
+            Debug.Log($"x:({(int)Math.Round(pos.x)}), y:({(int)Math.Round(pos.y)}) D:{DateTime.Now}");
         }
     }
 
