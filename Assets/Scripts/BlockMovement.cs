@@ -51,6 +51,26 @@ public class BlockMovement : MonoBehaviour
         }
     }
 
+    private bool IsHit(Transform transform)
+    {
+        // 壁にあたるとき
+        if (IsHitWall(transform)) return true;
+
+        var map = FindObjectOfType<BlockMap>();
+
+        foreach (Transform child in transform)
+        {
+            Vector2 block1Pos = child.position;
+
+            if (map.Exists((int)block1Pos.x, (int)block1Pos.y))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private bool IsHitWall(Transform transform)
     {
         var childCount = 0;
@@ -81,7 +101,7 @@ public class BlockMovement : MonoBehaviour
     {
         transform.position += new Vector3(-1, 0, 0);
 
-        if (IsHitWall(transform))
+        if (IsHit(transform))
         {
             transform.position += new Vector3(+1, 0, 0);
         }
@@ -91,7 +111,7 @@ public class BlockMovement : MonoBehaviour
     {
         transform.position += new Vector3(+1, 0, 0);
 
-        if (IsHitWall(transform))
+        if (IsHit(transform))
         {
             transform.position += new Vector3(-1, 0, 0);
         }
@@ -102,7 +122,7 @@ public class BlockMovement : MonoBehaviour
         var isHit = false;
         transform.position += new Vector3(0, -1, 0);
 
-        isHit = IsHitWall(transform);
+        isHit = IsHit(transform);
 
         if (isHit)
         {
@@ -116,7 +136,7 @@ public class BlockMovement : MonoBehaviour
     {
         transform.Rotate(0, 0, 90);
 
-        if (IsHitWall(transform))
+        if (IsHit(transform))
         {
             transform.Rotate(0, 0, -90);
         }

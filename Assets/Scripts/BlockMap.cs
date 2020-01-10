@@ -18,7 +18,7 @@ public class BlockMap : MonoBehaviour
 
             // 配列は 0, 0 を始点とする
             Set((int)pos.x, (int)pos.y);
-            Debug.Log($"x:({pos.x}), y:({pos.y})");
+            Debug.Log($"x:({pos.x}), y:({pos.y}) D:{DateTime.Now}");
         }
     }
 
