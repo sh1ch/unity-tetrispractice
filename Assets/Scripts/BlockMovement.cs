@@ -64,7 +64,6 @@ public class BlockMovement : MonoBehaviour
 
             if (map.Exists((int)Math.Round(block1Pos.x), (int)Math.Round(block1Pos.y)))
             {
-                Debug.Log($"Exists:{(int)Math.Round(block1Pos.x)}, {(int)Math.Round(block1Pos.y)})");
                 return true;
             }
         }
@@ -81,8 +80,6 @@ public class BlockMovement : MonoBehaviour
             Vector2 block1Pos = child.position;
 
             childCount += 1;
-
-            // Debug.Log($"C:{childCount}, POS:{block1Pos}, D:{DateTime.Now}");
 
             if (IsHitBorder(block1Pos))
             {
