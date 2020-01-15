@@ -43,8 +43,22 @@ public class BlockMovement : MonoBehaviour
         {
             enabled = false;
 
-            // マップに書き込み
-            FindObjectOfType<BlockMap>()?.Write(transform);
+
+            var map = FindObjectOfType<BlockMap>();
+
+            if (map != null)
+            {
+                // マップに書き込み
+                map.Write(transform);
+
+                // マップのクリア
+                var clearableLines = map.GetClearableLines();
+
+                if (clearableLines != null)
+                {
+                    map.ClearLines(clearableLines);
+                }
+            }
 
             // 次のブロックを生成する
             FindObjectOfType<BlockSpawner>()?.SpawnBlock();

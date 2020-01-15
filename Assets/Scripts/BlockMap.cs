@@ -72,19 +72,62 @@ public class BlockMap : MonoBehaviour
     /// <summary>
     /// 指定したブロックをマップ座標に設置します。
     /// </summary>
-    /// <param name="transform"></param>
+    /// <param name="transform">ブロックの組み合わせを表す Transform。</param>
     public void Set(Transform transform)
     {
         if (transform == null) throw new ArgumentNullException("指定した Transform の値は null です。");
 
         Vector2 blockPos = transform.position;
 
-        int x = Convert.ToInt32(transform.position.x);
-        int y = Convert.ToInt32(transform.position.y);
+        int x = Convert.ToInt32(blockPos.x);
+        int y = Convert.ToInt32(blockPos.y);
 
         _Map[x, y] = transform;
+    }
 
-        // TODO ブロック列のクリアを確認
+    /// <summary>
+    /// 指定した列番号のブロックをクリアし、マップを下詰めします。
+    /// </summary>
+    /// <param name="y">列番号。</param>
+    public void ClearLine(int y)
+    {
+        for (int x = 0; x < MAX_X; x++)
+        {
+            UnSet(x, y);
+        }
+
+        // クリアした行よりも上に存在するマップデータを下詰めします
+        DownLines(y);
+    }
+
+    /// <summary>
+    /// 指定したコレクションの列のブロックをクリアし、マップを下詰めします。
+    /// </summary>
+    /// <param name="lines">列番号を表すコレクション。</param>
+    public void ClearLines(IEnumerable<int> lines)
+    {
+        foreach (var y in lines)
+        {
+            ClearLine(y);
+        }
+    }
+
+    /// <summary>
+    /// 指定したマップの座標に存在するブロックをクリアします。
+    /// </summary>
+    /// <param name="transform">ブロックの組み合わせを表す Transform。</param>
+    public void UnSet(Transform transform)
+    {
+        Vector2 blockPos = transform.position;
+
+        int x = Convert.ToInt32(blockPos.x);
+        int y = Convert.ToInt32(blockPos.y);
+
+        if (Exists(x, y))
+        {
+            Destroy(_Map[x, y].gameObject);
+            _Map[x, y] = null;
+        }
     }
 
     /// <summary>
@@ -92,15 +135,12 @@ public class BlockMap : MonoBehaviour
     /// </summary>
     /// <param name="x">x 座標の位置。</param>
     /// <param name="y">y 座標の位置。</param>
-    public void UnSet(float x, float y)
+    public void UnSet(int x, int y)
     {
-        int ix = Convert.ToInt32(transform.position.x);
-        int iy = Convert.ToInt32(transform.position.y);
-
-        if (Exists(ix, iy))
+        if (Exists(x, y))
         {
-            Destroy(_Map[ix, iy].gameObject);
-            _Map[ix, iy] = null;
+            Destroy(_Map[x, y].gameObject);
+            _Map[x, y] = null;
         }
     }
 
@@ -132,8 +172,7 @@ public class BlockMap : MonoBehaviour
     /// <summary>
     /// 指定したブロックの位置に別のブロックが存在するかどうかを示す値を取得します。
     /// </summary>
-    /// <param name="x">x 座標の位置。</param>
-    /// <param name="y">y 座標の位置。</param>
+    /// <param name="transform">ブロックの組み合わせを表す Transform。</param>
     /// <returns>有効のとき true。それ以外のとき false。</returns>
     public bool Exists(Transform transform)
     {
@@ -165,5 +204,56 @@ public class BlockMap : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// クリア可能な列番号のコレクションを取得します。
+    /// </summary>
+    /// <returns>クリア可能な列番号のコレクションを返却します。存在しないとき、null を返却。</returns>
+    public IEnumerable<int> GetClearableLines()
+    {
+        var clearableLines = new List<int>();
+
+        for (int y = 0; y < MAX_Y; y++)
+        {
+            int x;
+            for (x = 0; x < MAX_X; x++)
+            {
+                if (!Exists(x, y))
+                {
+                    break;
+                }
+            }
+
+            // 行はすべて埋まっている
+            if (x == MAX_X)
+            {
+                clearableLines.Add(y);
+            }
+        }
+
+        return clearableLines.Count > 0 ? clearableLines : null;
+    }
+
+    /// <summary>
+    /// 指定した行番号より上に存在するブロックの列の位置を一段下に落とします。
+    /// </summary>
+    /// <param name="y"></param>
+    private void DownLines(int y)
+    {
+        for (int sy = y + 1; sy < MAX_Y; sy++)
+        {
+            for (var x = 0; x < MAX_X; x++)
+            {
+                if (Exists(x, sy))
+                {
+                    var block = _Map[x, sy];
+
+                    _Map[x, sy - 1] = block;
+                    _Map[x, sy] = null;
+
+                    block.position += new Vector3(0, -1, 0);
+                }
+            }
+        }
+    }
 
 }
