@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 664850575}
   - component: {fileID: 664850577}
   - component: {fileID: 664850576}
+  - component: {fileID: 664850578}
   m_Layer: 5
   m_Name: ScorePointText
   m_TagString: Untagged
@@ -526,6 +527,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664850574}
   m_CullTransparentMesh: 0
+--- !u!114 &664850578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664850574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a92194749f258542b23607995162658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &800194966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5190934419493867130, guid: a55ff596f5227c544b58448e7c7c82b5,
@@ -592,11 +605,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 5
+    m_FontSize: 4
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 53
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1

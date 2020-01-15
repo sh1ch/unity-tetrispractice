@@ -104,12 +104,19 @@ public class BlockMap : MonoBehaviour
     /// 指定したコレクションの列のブロックをクリアし、マップを下詰めします。
     /// </summary>
     /// <param name="lines">列番号を表すコレクション。</param>
-    public void ClearLines(IEnumerable<int> lines)
+    /// <returns>クリアした列数を返却します。</returns>
+    public int ClearLines(IEnumerable<int> lines)
     {
+        int count = 0;
+
         foreach (var y in lines)
         {
             ClearLine(y);
+
+            count += 1;
         }
+
+        return count;
     }
 
     /// <summary>

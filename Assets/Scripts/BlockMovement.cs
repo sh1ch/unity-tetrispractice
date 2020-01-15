@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class BlockMovement : MonoBehaviour
 {
-    public float Speed { get; set; } = 1.0f;
+    private Score _Score = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _Score = GameObject.Find("ScorePointText").GetComponent<Score>();
     }
 
     // Update is called once per frame
@@ -28,7 +28,11 @@ public class BlockMovement : MonoBehaviour
 
         if (Input.GetKeyDown("s"))
         {
-            MoveBottom();
+            if (!MoveBottom())
+            {
+                // 下への動作を確定できれば 10 点
+                _Score.Add(10);
+            }
         }
 
         if (Input.GetKeyDown("w"))
@@ -56,13 +60,18 @@ public class BlockMovement : MonoBehaviour
 
                 if (clearableLines != null)
                 {
-                    map.ClearLines(clearableLines);
+                    var clearCount = map.ClearLines(clearableLines);
+
+                    _Score.Add(clearCount * 1000);
                 }
             }
 
             // 次のブロックを生成する
             FindObjectOfType<BlockSpawner>()?.SpawnBlock();
         }
+
+        // ブロックが強制移動するたびに 10 点
+        _Score.Add(10);
     }
 
     private bool IsHit(Transform transform)
