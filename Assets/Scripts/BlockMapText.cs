@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// <see cref="BlockMapText"/> クラスは、ゲームのブロックデータをテキストで表示する役割のクラスです。
+/// </summary>
 public class BlockMapText : MonoBehaviour
 {
     // Update is called once per frame

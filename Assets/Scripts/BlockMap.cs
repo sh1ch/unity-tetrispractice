@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// <see cref="BlockMap"/> クラスは、ブロックのマップを管理するクラスです。
+/// </summary>
 public class BlockMap : MonoBehaviour
 {
     private const int MAX_X = 12;
@@ -61,6 +64,10 @@ public class BlockMap : MonoBehaviour
         return text;
     }
 
+    /// <summary>
+    /// 指定したブロックをマップに書き込みます。
+    /// </summary>
+    /// <param name="transform">書き込みブロック。</param>
     public void Write(Transform transform)
     {
         foreach(Transform block in transform)
@@ -241,9 +248,9 @@ public class BlockMap : MonoBehaviour
     }
 
     /// <summary>
-    /// 指定した行番号より上に存在するブロックの列の位置を一段下に落とします。
+    /// 指定した列番号より上に存在するブロックの列の位置を一段下に落とします。
     /// </summary>
-    /// <param name="y"></param>
+    /// <param name="y">クリアが発生した列番号。</param>
     private void DownLines(int y)
     {
         for (int sy = y + 1; sy < MAX_Y; sy++)

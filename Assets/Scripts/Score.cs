@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// <see cref="Score"/> クラスは得点を表示・コントロールする役割のクラスです。
+/// </summary>
 public class Score : MonoBehaviour
 {
     private GameObject _ScorePoint = null;

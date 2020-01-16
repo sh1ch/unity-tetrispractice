@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// <see cref="BlockSpawner"/> クラスは、落下するブロックを生成するクラスです。
+/// </summary>
 public class BlockSpawner : MonoBehaviour
 {
-    private const int BLOCK_MAX_TYPE = 7;
-    public GameObject[] _Blocks;
-
     /// <summary>
     /// 現在、落下＆操作中のブロックを取得します。
     /// </summary>
@@ -14,9 +14,22 @@ public class BlockSpawner : MonoBehaviour
 
     public void SpawnBlock()
     {
-        int randomIndex = Random.Range(0, BLOCK_MAX_TYPE - 1);
+        var prophet = GameObject.Find("BlockProphet").GetComponent<BlockProphet>();
+        var Spawner = GameObject.Find("BlockSpawner");
 
-        SelectedBlock = Instantiate(_Blocks[randomIndex], transform.position, Quaternion.identity);
+        // 預言クラスから次のブロックを取得する
+        var nextBlock = prophet.NextBlock;
+
+        if (nextBlock != null)
+        {
+            SelectedBlock = nextBlock;
+            SelectedBlock.AddComponent<BlockMovement>();
+        }
+
+        SelectedBlock.transform.position = Spawner.transform.position;
+
+        // 次のブロックを予言する
+        prophet.Predict();
     }
 
     // Start is called before the first frame update

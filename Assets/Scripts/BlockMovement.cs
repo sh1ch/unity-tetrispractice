@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BlockMovement : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class BlockMovement : MonoBehaviour
     void Start()
     {
         _Score = GameObject.Find("ScorePointText").GetComponent<Score>();
+
+        // 生成が発生したタイミングでブロックの衝突が発生したときゲームオーバー
+        if (IsHit(transform))
+        {
+            Invoke(nameof(GotoGameoverScene), 1.0F);
+        }
     }
 
     // Update is called once per frame
@@ -63,6 +70,13 @@ public class BlockMovement : MonoBehaviour
                     var clearCount = map.ClearLines(clearableLines);
 
                     _Score.Add(clearCount * 1000);
+
+                    AudioManager.Instance.PlayOneShot(SoundType.Clear);
+                }
+                else
+                {
+                    // ブロックの固定のみ
+                    AudioManager.Instance.PlayOneShot(SoundType.Stop);
                 }
             }
 
@@ -161,5 +175,16 @@ public class BlockMovement : MonoBehaviour
         {
             transform.Rotate(0, 0, -90);
         }
+        else
+        {
+            // 回転できるときだけ、効果音を鳴らす
+            AudioManager.Instance.PlayOneShot(SoundType.Rotate);
+        }
+    }
+
+    private void GotoGameoverScene()
+    {
+        Destroy(gameObject);
+        SceneManager.LoadScene("GameoverScene");
     }
 }
