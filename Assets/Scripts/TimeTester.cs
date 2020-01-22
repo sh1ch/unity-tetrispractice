@@ -13,11 +13,11 @@ public class TimeTester : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update Method Called.");
+        Debugger.Log("Update Method Called.");
     }
 
     void FixedUpdate()
     {
-        Debug.Log("FixedUpdate Method Called.");
+        Debugger.Log("FixedUpdate Method Called.");
     }
 }

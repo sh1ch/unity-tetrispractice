@@ -15,7 +15,7 @@ public class BlockMapText : MonoBehaviour
 
         if (textComponent == null)
         {
-            Debug.Log("BlockMapText コンポーネントを取得できませんでした。ブロックのテキスト出力に失敗しました。");
+            Debugger.Log("BlockMapText コンポーネントを取得できませんでした。ブロックのテキスト出力に失敗しました。");
             return; 
         }
 

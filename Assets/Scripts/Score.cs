@@ -18,6 +18,7 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debugger.Log($"{nameof(Score)} クラス {nameof(Start)} メソッドを実行します。");
         _ScorePoint = GameObject.Find("ScorePointText");
     }
 
